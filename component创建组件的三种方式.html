@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+
+<div id="app">
+    <!-- 使用组件，如果用驼峰命名方式，则需要用'-'代替大写字母，如果没有使用驼峰命名，则直接使用 -->
+    <my-com1></my-com1>
+    <mycom2></mycom2>
+    <my-com3></my-com3>
+    <login></login>
+    <counter></counter>
+
+    <template id="tp3">
+        <div>
+            <h1>使用template标签定义组件</h1>
+        </div>
+    </template>
+
+</div>
+
+<script>
+    //一、使用Vue.extend来创建全局vue组件
+    //使用Vue.component创建组件
+    Vue.component('myCom1',Vue.extend({
+        template:'<h3>使用Vue.extend创建组件</h3>'//tempalte只能有唯一一个根元素
+    }));
+
+
+    //二、直接使用Vue.component创建组件
+    Vue.component('mycom2',{
+        template:'<h2>直接使用Vue.component创建组件</h2>'//tempalte只能有唯一一个根元素
+    });
+
+    //三、使用<template>标签定义组件
+    Vue.component('myCom3',{
+        template:'#tp3'
+    });
+
+    //*在组件中定义data，组件中的data必须是function()并且方法的返回值必须是对象
+    //组件也可以有自己的data、function
+    var objData = {count:0};
+    Vue.component('counter',{
+        template:'<div><input type="button" value="+1" @click="increment" ><h3>{{count}}</h3></div>>',
+        data:function(){
+            return {count:0};
+        },
+        methods:{
+            increment:function(){
+                this.count++;
+            }
+        }
+
+    });
+
+    //父组件向子组件传值,通过子组件中的props属性
+    //data中的数据可读可写,props中的数据只是可读
+
+
+
+    var vm = new Vue({
+        el:"#app",
+        data:{
+
+        },
+        method:{
+
+        },
+        components:{//定义私有组件
+            login:{
+                template:'<h2>私有的login组件</h2>'
+            }
+
+        }
+    });
+
+
+</script>
+</body>
+</html>

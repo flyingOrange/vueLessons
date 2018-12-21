@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+<!-- 1.安装vue-router模块 -->
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+
+<div id="app">
+    <!-- 不推荐写法
+    <a href="#/login">login</a>
+    <a href="#/register">register</a>
+     -->
+
+    <!-- router-link默认渲染为<a>标签 -->
+    <router-link to="/login?id=22" >login</router-link>
+    <router-link to="/register/22" >register</router-link>
+
+    <!-- 4.vue-router提供的元素，专门用来占位 -->
+    <router-view></router-view>
+
+</div>
+
+<script>
+
+    //登录的组件模版对象
+    var login = {
+        template:'<h1>登录</h1>',
+        created(){//组件生命周期函数
+            console.log(this.$route.id);//参数保存在this.$route.query中
+        }
+
+    };
+    var register = {
+        template:'<h1>注册</h1>',
+        created(){//组件生命周期函数
+        console.log(this.$route.params.id);//参数保存在this.$route.params中
+        }
+    };
+
+    <!-- 2.创建router对象 -->
+    var routerObj = new VueRouter({
+        //路由匹配规则
+        routes:[//每个路由规则都是一个对象，必须有path和component属性
+            {path:'/',redirect:'login'},//设置重定向，一旦访问'/'根路径自动跳转
+            {path:'/login',component:login},//component是组件对象，而不是组件名称
+            {path:'/register/:id',component:register}
+        ]
+
+    });
+
+    var vm = new Vue({
+        el:"#app",
+        data:{},
+        method:{
+
+        },
+        router:routerObj//3.将路由规则注册到vm上
+
+
+    });
+
+
+</script>
+
+</body>
+</html>
